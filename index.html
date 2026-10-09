@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-BQL2g9aU.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-Y_gXY0CU.css">
+    <script type="module" crossorigin src="./assets/index-D83f-RuN.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-C3VW2WYT.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small>lifelike test</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.1.0</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -64,6 +64,73 @@
           <label class="chk"><input type="checkbox" id="chk-sway" checked /> Idle sway</label>
           <label class="ctl">Amount<input type="range" id="rng-sway" min="0" max="3" step="0.05" value="0.9" /><output id="out-sway">0.9°</output></label>
           <label class="chk"><input type="checkbox" id="chk-physics" /> Physics (Ammo.js)</label>
+        </section>
+
+        <section class="sec">
+          <h2>Camera</h2>
+          <div class="row" id="view-presets"></div>
+          <label class="ctl">Fit<input type="range" id="rng-fit" min="0.8" max="3" step="0.05" value="1.55" /><output id="out-fit">1.55×</output></label>
+          <label class="ctl">POV<input type="range" id="rng-fov" min="12" max="90" step="1" value="35" /><output id="out-fov">35°</output></label>
+          <div class="row">
+            <button id="btn-fit">Fit whole body</button>
+            <button id="btn-reset-view">Reset view</button>
+          </div>
+          <p class="muted tiny">Fit frames the whole model and the slider resizes that frame. Double tap (or double click) the stage to snap back to it.</p>
+        </section>
+
+        <section class="sec">
+          <h2>Lighting</h2>
+          <label class="ctl">X<input type="range" id="rng-light-x" min="-40" max="40" step="0.5" value="-6" /><output id="out-light-x">-6</output></label>
+          <label class="ctl">Y<input type="range" id="rng-light-y" min="-40" max="40" step="0.5" value="14" /><output id="out-light-y">14</output></label>
+          <label class="ctl">Z<input type="range" id="rng-light-z" min="-40" max="40" step="0.5" value="16" /><output id="out-light-z">16</output></label>
+          <label class="ctl">R<input type="range" id="rng-light-r" min="0" max="1" step="0.01" value="1" /><output id="out-light-r">255</output></label>
+          <label class="ctl">G<input type="range" id="rng-light-g" min="0" max="1" step="0.01" value="1" /><output id="out-light-g">255</output></label>
+          <label class="ctl">B<input type="range" id="rng-light-b" min="0" max="1" step="0.01" value="1" /><output id="out-light-b">255</output></label>
+          <div class="row"><button id="btn-light-reset">Default light</button></div>
+        </section>
+
+        <section class="sec">
+          <h2>Self shadow</h2>
+          <div class="row" id="shadow-modes"></div>
+          <label class="ctl">Range<input type="range" id="rng-shadow-range" min="0" max="10000" step="50" value="4000" /><output id="out-shadow-range">4000</output></label>
+          <p class="muted tiny">Mode 1 is crisp, mode 2 is soft. Range runs from detail (0) to far away (10000).</p>
+        </section>
+
+        <section class="sec">
+          <h2>Stage</h2>
+          <label class="ctl">Backdrop<input type="color" id="bg-color" value="#101725" /><output id="out-bg">custom</output></label>
+          <div class="row">
+            <button id="btn-bg-reset">Default backdrop</button>
+            <button id="btn-grid">Toggle grid</button>
+          </div>
+        </section>
+
+        <section class="sec">
+          <h2>Accessories <output id="out-accessory-count" class="muted">0</output></h2>
+          <div class="row">
+            <button id="btn-accessory">Add .x / .fx</button>
+            <button id="btn-accessory-clear" disabled>Clear all</button>
+          </div>
+          <div id="accessory-list" class="list"><em class="muted">No accessory loaded — drop a folder with the .x file and its textures.</em></div>
+          <div id="accessory-controls" hidden>
+            <label class="ctl">Pos X<input type="range" id="rng-acc-x" min="-60" max="60" step="0.5" value="0" /><output id="out-acc-x">0</output></label>
+            <label class="ctl">Pos Y<input type="range" id="rng-acc-y" min="-60" max="60" step="0.5" value="0" /><output id="out-acc-y">0</output></label>
+            <label class="ctl">Pos Z<input type="range" id="rng-acc-z" min="-60" max="60" step="0.5" value="0" /><output id="out-acc-z">0</output></label>
+            <label class="ctl">Rot X<input type="range" id="rng-acc-rx" min="-180" max="180" step="1" value="0" /><output id="out-acc-rx">0°</output></label>
+            <label class="ctl">Rot Y<input type="range" id="rng-acc-ry" min="-180" max="180" step="1" value="0" /><output id="out-acc-ry">0°</output></label>
+            <label class="ctl">Rot Z<input type="range" id="rng-acc-rz" min="-180" max="180" step="1" value="0" /><output id="out-acc-rz">0°</output></label>
+            <label class="ctl">Scale<input type="range" id="rng-acc-scale" min="0.05" max="10" step="0.05" value="1" /><output id="out-acc-scale">1.00×</output></label>
+          </div>
+          <input id="pick-accessory" type="file" accept=".x,.fx,.pmx,.pmd" multiple hidden />
+          <p class="muted tiny">MMD .fx effect shaders are HLSL and cannot run in WebGL, so they are skipped with a note; .x and .pmx props load and can be moved, rotated and resized here.</p>
+        </section>
+
+        <section class="sec">
+          <h2>Textures</h2>
+          <label class="chk"><input type="checkbox" id="chk-alpha-cut" checked /> Alpha cut (cut-out parts)</label>
+          <label class="ctl">Cut<input type="range" id="rng-alpha-cut" min="0" max="1" step="0.01" value="0.5" /><output id="out-alpha-cut">0.50</output></label>
+          <label class="chk"><input type="checkbox" id="chk-two-sided" /> Two-sided materials</label>
+          <p class="muted tiny">MMD cuts hair, lashes and frills out of their texture with transparency. Without an alpha cut those regions are drawn as solid blocks, which looks like missing texture.</p>
         </section>
 
         <section class="sec">
