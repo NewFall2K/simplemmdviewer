@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-D83f-RuN.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-C3VW2WYT.css">
+    <script type="module" crossorigin src="./assets/index-BsvUsaBl.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CAd_yyut.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.1.0</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.1.1</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -35,8 +35,10 @@
         <section class="sec">
           <h2>Model</h2>
           <div id="model-info" class="info muted">No model loaded — pick a folder or drop one on the stage.</div>
+          <div id="model-warnings" class="warn" hidden></div>
           <div id="model-list" class="list"></div>
           <button id="btn-load-model" class="wide" disabled>Load selected model</button>
+          <button id="btn-retry-textures" class="wide" disabled>Retry textures</button>
         </section>
 
         <section class="sec">
@@ -60,7 +62,11 @@
           <label class="ctl">Depth<input type="range" id="rng-breath-depth" min="0" max="8" step="0.1" value="2.6" /><output id="out-breath-depth">2.6°</output></label>
           <label class="chk"><input type="checkbox" id="chk-blink" checked /> Random blinking</label>
           <label class="ctl">Interval<input type="range" id="rng-blink" min="1" max="10" step="0.1" value="3.5" /><output id="out-blink">3.5 s</output></label>
-          <label class="ctl">Wink<input type="range" id="rng-wink" min="0" max="1" step="0.01" value="0.18" /><output id="out-wink">18%</output></label>
+          <label class="ctl">Wink chance<input type="range" id="rng-wink" min="0" max="1" step="0.01" value="0" /><output id="out-wink">0%</output></label>
+          <div class="row">
+            <button id="btn-blink">Blink</button>
+            <button id="btn-wink">Wink</button>
+          </div>
           <label class="chk"><input type="checkbox" id="chk-sway" checked /> Idle sway</label>
           <label class="ctl">Amount<input type="range" id="rng-sway" min="0" max="3" step="0.05" value="0.9" /><output id="out-sway">0.9°</output></label>
           <label class="chk"><input type="checkbox" id="chk-physics" /> Physics (Ammo.js)</label>
