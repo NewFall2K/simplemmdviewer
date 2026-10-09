@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0d14" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>MMD Viewer · lifelike test</title>
+    <script type="module" crossorigin src="./assets/index-BQL2g9aU.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Y_gXY0CU.css">
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+
+    <header id="topbar">
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small>lifelike test</small></div>
+      <div class="actions">
+        <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
+        <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
+        <button id="btn-demo" class="ghost" title="Load the three.js sample model + motion from CDN">Demo</button>
+        <button id="btn-tpose" class="ghost" title="Stop motion and restore the bind pose" disabled>Rest pose</button>
+        <button id="btn-panel" class="ghost" title="Show/hide the side panel (P)">Panel</button>
+        <button id="btn-ui" class="ghost" title="Hide the interface (H)">Hide UI</button>
+      </div>
+    </header>
+
+    <input id="pick-model" type="file" webkitdirectory multiple hidden />
+    <input id="pick-motion" type="file" accept=".vmd" multiple hidden />
+
+    <div id="dock">
+      <button id="panel-tab" title="Hide the side panel (P)">Panel</button>
+      <aside id="panel">
+        <section class="sec">
+          <h2>Model</h2>
+          <div id="model-info" class="info muted">No model loaded — pick a folder or drop one on the stage.</div>
+          <div id="model-list" class="list"></div>
+          <button id="btn-load-model" class="wide" disabled>Load selected model</button>
+        </section>
+
+        <section class="sec">
+          <h2>Motion</h2>
+          <div id="motion-list" class="list"><em class="muted">No motion loaded</em></div>
+          <div class="row">
+            <button id="btn-play" disabled>Play</button>
+            <button id="btn-clear-motion" disabled>Clear</button>
+            <label class="chk"><input type="checkbox" id="chk-loop" checked /> loop</label>
+          </div>
+          <label class="ctl">Speed<input type="range" id="rng-speed" min="0.1" max="2" step="0.05" value="1" /><output id="out-speed">1.00×</output></label>
+          <label class="ctl">Time<input type="range" id="rng-time" min="0" max="1" step="0.001" value="0" /><output id="out-time">0.00 s</output></label>
+        </section>
+
+        <section class="sec">
+          <h2>Lifelike</h2>
+          <label class="chk"><input type="checkbox" id="chk-look" checked /> Look at viewer</label>
+          <label class="ctl">Strength<input type="range" id="rng-look" min="0" max="1" step="0.05" value="0.85" /><output id="out-look">85%</output></label>
+          <label class="chk"><input type="checkbox" id="chk-breathe" checked /> Breathing</label>
+          <label class="ctl">Rate<input type="range" id="rng-breath-rate" min="6" max="30" step="1" value="14" /><output id="out-breath-rate">14 /min</output></label>
+          <label class="ctl">Depth<input type="range" id="rng-breath-depth" min="0" max="8" step="0.1" value="2.6" /><output id="out-breath-depth">2.6°</output></label>
+          <label class="chk"><input type="checkbox" id="chk-blink" checked /> Random blinking</label>
+          <label class="ctl">Interval<input type="range" id="rng-blink" min="1" max="10" step="0.1" value="3.5" /><output id="out-blink">3.5 s</output></label>
+          <label class="ctl">Wink<input type="range" id="rng-wink" min="0" max="1" step="0.01" value="0.18" /><output id="out-wink">18%</output></label>
+          <label class="chk"><input type="checkbox" id="chk-sway" checked /> Idle sway</label>
+          <label class="ctl">Amount<input type="range" id="rng-sway" min="0" max="3" step="0.05" value="0.9" /><output id="out-sway">0.9°</output></label>
+          <label class="chk"><input type="checkbox" id="chk-physics" /> Physics (Ammo.js)</label>
+        </section>
+
+        <section class="sec">
+          <h2>Morphs <output id="out-morph-count" class="muted">0</output></h2>
+          <p class="muted tiny">Temporary morphs are reset by motion data. Set a morph to permanent to keep it applied on top of the animation.</p>
+          <input id="txt-search" type="search" placeholder="Search morph…" />
+          <div class="row" id="morph-filters"></div>
+          <div class="row"><button id="btn-clear-temp">Reset temporary</button><button id="btn-unlock">Unlock all</button></div>
+          <div id="morph-list" class="list morphs"><em class="muted">Load a model to list its morphs.</em></div>
+        </section>
+      </aside>
+    </div>
+
+    <button id="btn-show-ui" title="Show the interface (H)">Show UI</button>
+
+    <div id="statusbar"><span id="stats">—</span><span id="status" class="muted">ready</span></div>
+    <div id="overlay" hidden><div class="spinner"></div><span id="overlay-text">Loading…</span></div>
+    <div id="drophint" hidden>Drop model folder / .vmd files here</div>
+
+  </body>
+</html>
