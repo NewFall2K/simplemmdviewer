@@ -8,14 +8,14 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-BsvUsaBl.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CAd_yyut.css">
+    <script type="module" crossorigin src="./assets/index-D-xyEwsX.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-VMQLfZRc.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.1.1</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.1.2</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -35,7 +35,7 @@
         <section class="sec">
           <h2>Model</h2>
           <div id="model-info" class="info muted">No model loaded — pick a folder or drop one on the stage.</div>
-          <div id="model-warnings" class="warn" hidden></div>
+          <div id="model-warnings" class="note" hidden></div>
           <div id="model-list" class="list"></div>
           <button id="btn-load-model" class="wide" disabled>Load selected model</button>
           <button id="btn-retry-textures" class="wide" disabled>Retry textures</button>
@@ -44,6 +44,7 @@
         <section class="sec">
           <h2>Motion</h2>
           <div id="motion-list" class="list"><em class="muted">No motion loaded</em></div>
+          <div class="row" id="motion-modes"></div>
           <div class="row">
             <button id="btn-play" disabled>Play</button>
             <button id="btn-clear-motion" disabled>Clear</button>
@@ -51,6 +52,7 @@
           </div>
           <label class="ctl">Speed<input type="range" id="rng-speed" min="0.1" max="2" step="0.05" value="1" /><output id="out-speed">1.00×</output></label>
           <label class="ctl">Time<input type="range" id="rng-time" min="0" max="1" step="0.001" value="0" /><output id="out-time">0.00 s</output></label>
+          <p class="muted tiny">The bar at the bottom of the stage is the same playhead, sized for thumbs.</p>
         </section>
 
         <section class="sec">
@@ -151,6 +153,13 @@
     </div>
 
     <button id="btn-show-ui" title="Show the interface (H)">Show UI</button>
+
+    <div id="playbar" hidden>
+      <button id="pb-play" class="pb-icon" title="Play / pause (Space)">▶</button>
+      <input id="rng-scrub" type="range" min="0" max="1" step="0.001" value="0" aria-label="Motion position" />
+      <span id="pb-time" class="pb-time">0:00 / 0:00</span>
+      <button id="pb-loop" class="pb-icon on" title="Loop the motion">Loop</button>
+    </div>
 
     <div id="statusbar"><span id="stats">—</span><span id="status" class="muted">ready</span></div>
     <div id="overlay" hidden><div class="spinner"></div><span id="overlay-text">Loading…</span></div>
