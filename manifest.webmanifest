@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "MMD Viewer",
+  "short_name": "MMD Viewer",
+  "description": "Browser-only MikuMikuDance viewer: PMX/PMD models, VMD motions, a pose editor, a frame-manipulation timeline, a seeded playlist with crossfades, and an offline lifelike layer.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0b0d14",
+  "theme_color": "#0b0d14",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["entertainment", "graphics"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

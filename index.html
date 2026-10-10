@@ -7,8 +7,13 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="MMD Viewer" />
+    <meta name="description" content="Browser-only MMD (MikuMikuDance) viewer: PMX/PMD models, VMD motions, pose editor, frame-manipulation timeline, seeded playlist and offline support." />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" type="image/png" sizes="64x64" href="./icons/favicon-64.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-ZUO04rwl.js"></script>
+    <script type="module" crossorigin src="./assets/index-DIFxIxGZ.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-GSCSpFYe.css">
   </head>
   <body>
@@ -22,6 +27,7 @@
         <button id="btn-motion-folder" title="Pick a folder and load every .vmd inside it, in name order" disabled>Motion folder</button>
         <button id="btn-demo" class="ghost" title="Load the three.js sample model + motion from CDN">Demo</button>
         <button id="btn-tpose" class="ghost" title="Stop motion and restore the bind pose" disabled>Rest pose</button>
+        <button id="btn-install" class="ghost" title="Install the viewer as an app" hidden>Install</button>
         <button id="btn-theme" class="ghost" title="Switch between dark and light mode">Dark</button>
         <button id="btn-panel" class="ghost" title="Show/hide the side panel (P)">Panel</button>
         <button id="btn-ui" class="ghost" title="Hide the interface (H)">Hide UI</button>
