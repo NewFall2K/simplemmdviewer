@@ -13,14 +13,14 @@
     <link rel="icon" type="image/png" sizes="64x64" href="./icons/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-BDjfyk6H.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-BD-27hdo.css">
+    <script type="module" crossorigin src="./assets/index-DljNpNtm.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DY2oTZ8Y.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.3.0</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.3.1</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -64,7 +64,11 @@
 
         <section class="sec" id="sec-motion">
           <h2>Motion <output id="out-motions-total" class="muted"></output></h2>
-          <p class="muted tiny">Loaded motions are a library: (O) picks the one that plays. Press <b>Shuffle all</b> to play every one of them in a random order, crossfading between each.</p>
+          <p class="muted tiny">Imported motions are a library — nothing plays until you pick one (<b>O</b>). <b>One go</b> plays every one of them as a crossfaded sequence, and the transport then counts the whole thing (<code>0:00 / 28:57</code>).</p>
+          <div class="row" id="motion-playback">
+            <button id="btn-play-separate" class="tab on" title="Play one motion at a time">Separate</button>
+            <button id="btn-play-all" class="tab" title="Play every motion in one crossfaded sequence" disabled>One go (all)</button>
+          </div>
           <div id="motion-list" class="list"><em class="muted">No motion loaded</em></div>
           <div class="row">
             <button id="btn-motion-random" title="Play one motion picked at random" disabled>Random</button>
@@ -209,17 +213,17 @@
 
         <section class="sec" id="sec-pose">
           <h2>Pose editor <output id="out-pose" class="muted">0 bones</output></h2>
-          <p class="muted tiny">Pick a bone, then rotate / move it. IK and grant are re-solved after every change, so a leg follows its IK bone. Insert key in the frame panel writes the pose into the motion.</p>
+          <p class="muted tiny">Pick a bone, then rotate / move it with a slider or by typing an exact number (the box beside each slider — it steps by the precision it shows and the two always agree). IK and grant are re-solved after every change, so a leg follows its IK bone. Insert key in the frame panel writes the pose into the motion.</p>
           <div class="row">
             <b id="pose-bone-name">no bone selected</b>
             <span id="pose-bone-meta" class="muted tiny"></span>
           </div>
-          <label class="ctl">Rot X<input type="range" id="pose-rx" min="-180" max="180" step="1" value="0" /><output id="out-pose-rx">0°</output></label>
-          <label class="ctl">Rot Y<input type="range" id="pose-ry" min="-180" max="180" step="1" value="0" /><output id="out-pose-ry">0°</output></label>
-          <label class="ctl">Rot Z<input type="range" id="pose-rz" min="-180" max="180" step="1" value="0" /><output id="out-pose-rz">0°</output></label>
-          <label class="ctl">Move X<input type="range" id="pose-px" min="-10" max="10" step="0.01" value="0" /><output id="out-pose-px">0.00</output></label>
-          <label class="ctl">Move Y<input type="range" id="pose-py" min="-10" max="10" step="0.01" value="0" /><output id="out-pose-py">0.00</output></label>
-          <label class="ctl">Move Z<input type="range" id="pose-pz" min="-10" max="10" step="0.01" value="0" /><output id="out-pose-pz">0.00</output></label>
+          <label class="ctl">Rot X<input type="range" id="pose-rx" min="-180" max="180" step="1" value="0" /><span class="num"><input type="number" id="num-pose-rx" inputmode="decimal" min="-180" max="180" step="0.1" value="0" title="Type a value" /><i>°</i></span></label>
+          <label class="ctl">Rot Y<input type="range" id="pose-ry" min="-180" max="180" step="1" value="0" /><span class="num"><input type="number" id="num-pose-ry" inputmode="decimal" min="-180" max="180" step="0.1" value="0" title="Type a value" /><i>°</i></span></label>
+          <label class="ctl">Rot Z<input type="range" id="pose-rz" min="-180" max="180" step="1" value="0" /><span class="num"><input type="number" id="num-pose-rz" inputmode="decimal" min="-180" max="180" step="0.1" value="0" title="Type a value" /><i>°</i></span></label>
+          <label class="ctl">Move X<input type="range" id="pose-px" min="-10" max="10" step="0.01" value="0" /><span class="num"><input type="number" id="num-pose-px" inputmode="decimal" min="-10" max="10" step="0.001" value="0" title="Type a value" /></span></label>
+          <label class="ctl">Move Y<input type="range" id="pose-py" min="-10" max="10" step="0.01" value="0" /><span class="num"><input type="number" id="num-pose-py" inputmode="decimal" min="-10" max="10" step="0.001" value="0" title="Type a value" /></span></label>
+          <label class="ctl">Move Z<input type="range" id="pose-pz" min="-10" max="10" step="0.01" value="0" /><span class="num"><input type="number" id="num-pose-pz" inputmode="decimal" min="-10" max="10" step="0.001" value="0" title="Type a value" /></span></label>
           <div class="row">
             <button id="pose-reset-bone">Reset bone</button>
             <button id="pose-mirror" title="Swap 左/右 and mirror the pose">Mirror L↔R</button>
@@ -249,6 +253,16 @@
           <div class="row" id="morph-filters"></div>
           <div class="row"><button id="btn-clear-temp">Reset temporary</button><button id="btn-unlock">Unlock all</button></div>
           <div id="morph-list" class="list morphs"><em class="muted">Load a model to list its morphs.</em></div>
+        </section>
+
+        <section class="sec" id="sec-expressions">
+          <h2>Auto expressions <output id="out-expressions" class="muted">0</output></h2>
+          <p class="muted tiny">Facial morphs that play themselves — on top of idle, a pose you are building, or a dance. They are morphs only, so an expression can never fight the motion for a bone. <b>Hold</b> keeps one on; <b>Pulse</b> brings it up every few seconds; <b>Random</b> varies the timing and the strength too.</p>
+          <div class="row">
+            <button id="btn-expression-add" disabled title="Add a facial expression">Add expression</button>
+            <label class="chk"><input type="checkbox" id="chk-expression-all" /> include Other (その他)</label>
+          </div>
+          <div id="expression-list" class="list"><em class="muted">Load a model, then add an expression.</em></div>
         </section>
       </aside>
     </div>
@@ -292,6 +306,8 @@
         <select id="ed-track" title="Row the range operations apply to"></select>
         <button id="ed-row-add" title="Show a row for the picked track">show row</button>
         <label class="chk"><input type="checkbox" id="ed-allrows" /> all rows</label>
+        <button id="ed-newexpr" title="Add an auto expression and show only facial rows">new expression</button>
+        <label class="chk"><input type="checkbox" id="ed-facials" /> facials only</label>
         <input id="ed-range-start" type="number" min="0" step="1" value="0" title="Range start frame" />
         <span class="muted">–</span>
         <input id="ed-range-end" type="number" min="0" step="1" value="0" title="Range end frame" />
