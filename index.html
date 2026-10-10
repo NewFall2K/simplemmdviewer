@@ -13,14 +13,14 @@
     <link rel="icon" type="image/png" sizes="64x64" href="./icons/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-DIFxIxGZ.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-GSCSpFYe.css">
+    <script type="module" crossorigin src="./assets/index-BDjfyk6H.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-BD-27hdo.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.2.0</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.3.0</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -59,11 +59,18 @@
           <div id="model-list" class="list"></div>
           <button id="btn-load-model" class="wide" disabled>Load selected model</button>
           <button id="btn-retry-textures" class="wide" disabled>Retry textures</button>
+          <button id="btn-forget" class="wide ghost" title="Delete the saved files and settings, so the next reload starts empty">Forget saved session</button>
         </section>
 
         <section class="sec" id="sec-motion">
-          <h2>Motion</h2>
+          <h2>Motion <output id="out-motions-total" class="muted"></output></h2>
+          <p class="muted tiny">Loaded motions are a library: (O) picks the one that plays. Press <b>Shuffle all</b> to play every one of them in a random order, crossfading between each.</p>
           <div id="motion-list" class="list"><em class="muted">No motion loaded</em></div>
+          <div class="row">
+            <button id="btn-motion-random" title="Play one motion picked at random" disabled>Random</button>
+            <button id="btn-motion-shuffle" title="Play every loaded motion in a seeded random order" disabled>Shuffle all</button>
+            <button id="btn-motion-retry" title="Try the motions that failed to load again" hidden>Retry failed</button>
+          </div>
           <div class="row" id="motion-modes"></div>
           <div class="row">
             <button id="btn-play" disabled>Play</button>
@@ -102,7 +109,7 @@
             <input type="number" id="pl-cut-max" min="2" max="300" step="1" value="20" />
           </div>
           <label class="chk"><input type="checkbox" id="pl-random-start" /> Start each motion at a random offset</label>
-          <p id="pl-status" class="muted tiny">Playlist is off — load two or more motions and pick In order or Random.</p>
+          <p id="pl-status" class="muted tiny">Playlist is off — pick In order or Random, or press Shuffle all in the Motion section.</p>
           <p class="muted tiny">A transition never makes a cut longer: the crossfade runs over the last seconds of each motion, so a 20 s cut is still 20 s.</p>
         </section>
 
@@ -134,6 +141,14 @@
             <button id="btn-fit">Fit whole body</button>
             <button id="btn-reset-view">Reset view</button>
           </div>
+          <h2 style="margin-top:10px">Focus <output id="out-focus" class="muted">whole</output></h2>
+          <p class="muted tiny">Glides the view onto a part of the model <b>without zooming</b> — the distance and POV stay exactly as they are. "Low" is for kneeling / floor and bed dances.</p>
+          <div class="row">
+            <button id="btn-focus-whole" class="tab" title="Centre on the whole model">Whole</button>
+            <button id="btn-focus-upper" class="tab" title="Centre on the chest and head">Upper</button>
+            <button id="btn-focus-low" class="tab" title="Centre low on the hips — kneeling and bed dances">Low (bed)</button>
+          </div>
+          <label class="chk"><input type="checkbox" id="chk-focus-follow" /> Keep centred while it dances</label>
           <p class="muted tiny">Fit frames the whole model and the slider resizes that frame. Double tap (or double click) the stage to snap back to it.</p>
         </section>
 
