@@ -8,7 +8,7 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-DZ-SdUvC.js"></script>
+    <script type="module" crossorigin src="./assets/index-ZUO04rwl.js"></script>
     <link rel="stylesheet" crossorigin href="./assets/index-GSCSpFYe.css">
   </head>
   <body>
@@ -19,6 +19,7 @@
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
+        <button id="btn-motion-folder" title="Pick a folder and load every .vmd inside it, in name order" disabled>Motion folder</button>
         <button id="btn-demo" class="ghost" title="Load the three.js sample model + motion from CDN">Demo</button>
         <button id="btn-tpose" class="ghost" title="Stop motion and restore the bind pose" disabled>Rest pose</button>
         <button id="btn-theme" class="ghost" title="Switch between dark and light mode">Dark</button>
@@ -29,6 +30,7 @@
 
     <input id="pick-model" type="file" webkitdirectory multiple hidden />
     <input id="pick-motion" type="file" accept=".vmd" multiple hidden />
+    <input id="pick-motion-folder" type="file" webkitdirectory multiple hidden />
 
     <div id="dock">
       <button id="panel-tab" title="Hide the side panel (P)">Panel</button>
