@@ -8,8 +8,8 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="/assets/index-SLIFCtOv.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-BwSwp8Zb.css">
+    <script type="module" crossorigin src="/assets/index-Ca_7v1LM.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-GSCSpFYe.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
@@ -33,6 +33,7 @@
     <div id="dock">
       <button id="panel-tab" title="Hide the side panel (P)">Panel</button>
       <aside id="panel">
+        <nav id="panel-jump" aria-label="Jump to a panel section"></nav>
         <section class="sec">
           <h2>Editor <output id="out-mode" class="muted">off</output></h2>
           <div class="row modes">
@@ -69,6 +70,32 @@
           <label class="ctl">Speed<input type="range" id="rng-speed" min="0.1" max="2" step="0.05" value="1" /><output id="out-speed">1.00×</output></label>
           <label class="ctl">Time<input type="range" id="rng-time" min="0" max="1" step="0.001" value="0" /><output id="out-time">0.00 s</output></label>
           <p class="muted tiny">The bar at the bottom of the stage is the same playhead, sized for thumbs.</p>
+        </section>
+
+        <section class="sec" id="sec-playlist">
+          <h2>Playlist <output id="out-playlist" class="muted">off</output></h2>
+          <div class="row" id="playlist-orders"></div>
+          <label class="ctl">Seed<input type="number" id="pl-seed" min="1" max="4294967295" step="1" value="1" /><output id="out-seed"></output></label>
+          <div class="row">
+            <button id="pl-new-seed" title="Shuffle again with a different seed">New seed</button>
+            <button id="pl-restart" title="Back to the first motion of the pass">Restart</button>
+            <button id="pl-skip" title="Jump straight to the next motion">Next</button>
+          </div>
+          <label class="ctl">Transition<input type="range" id="rng-transition" min="0" max="3" step="0.05" value="0.4" /><output id="out-transition">0.40 s</output></label>
+          <label class="ctl">Length<select id="pl-cut"><option value="full">full motion</option><option value="fixed">fixed</option><option value="random">random</option></select><output id="out-cut">full motion</output></label>
+          <div class="row" id="pl-cut-fixed" hidden>
+            <span class="muted tiny">Fixed s</span>
+            <input type="number" id="pl-cut-fixed-s" min="2" max="300" step="1" value="20" />
+          </div>
+          <div class="row" id="pl-cut-random" hidden>
+            <span class="muted tiny">Min s</span>
+            <input type="number" id="pl-cut-min" min="2" max="300" step="1" value="8" />
+            <span class="muted tiny">Max s</span>
+            <input type="number" id="pl-cut-max" min="2" max="300" step="1" value="20" />
+          </div>
+          <label class="chk"><input type="checkbox" id="pl-random-start" /> Start each motion at a random offset</label>
+          <p id="pl-status" class="muted tiny">Playlist is off — load two or more motions and pick In order or Random.</p>
+          <p class="muted tiny">A transition never makes a cut longer: the crossfade runs over the last seconds of each motion, so a 20 s cut is still 20 s.</p>
         </section>
 
         <section class="sec">
@@ -252,6 +279,7 @@
 
     <div id="playbar" hidden>
       <button id="pb-play" class="pb-icon" title="Play / pause (Space)">▶</button>
+      <button id="pb-next" class="pb-icon" title="Skip to the next motion of the playlist" hidden>»</button>
       <input id="rng-scrub" type="range" min="0" max="1" step="0.001" value="0" aria-label="Motion position" />
       <span id="pb-time" class="pb-time">0:00 / 0:00</span>
       <button id="pb-loop" class="pb-icon on" title="Loop the motion">Loop</button>
