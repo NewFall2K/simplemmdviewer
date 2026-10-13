@@ -9,7 +9,9 @@
  * Two strategies, on purpose:
  *
  *  - **Navigations** are network-first, so a new deployment is picked up as soon
- *    as there is a network, with the cached shell as the offline fallback.
+ *    as there is a network, with the cached shell as the offline fallback. The
+ *    fetch for it is deliberately cache-hostile (see `shellFetch`): network-first
+ *    is worthless if "the network" is answered by a cache holding the old build.
  *  - **Everything else same-origin** is cache-first and remembers what it fetched.
  *    Asset names are content-hashed by Vite, so a cached file is by definition
  *    the right bytes; it also means the shell is complete offline after one visit
@@ -23,7 +25,7 @@
  * that happens while offline cannot empty the cache the running page needs.
  */
 
-const VERSION = 'mmdv-v1';
+const VERSION = 'mmdv-v2';
 
 /** Un-hashed files, so they are worth precaching by name at install time. */
 const SHELL = [
@@ -36,6 +38,26 @@ const SHELL = [
   './icons/apple-touch-icon.png',
   './icons/favicon-64.png',
 ];
+
+/**
+ * The shell, asked for by path with a nonce — so nothing between this worker and
+ * the origin can hand back the previous deployment:
+ *
+ *  - `cache: 'no-store'` takes the browser's own HTTP cache out of the path, which
+ *    otherwise answers a reload with its copy;
+ *  - the `?sw=` nonce does the same for the CDN in front of it, which caches by
+ *    full URL. GitHub Pages serves HTML with `max-age=600`, so without this a push
+ *    can stay invisible for ten minutes however often the page is reloaded.
+ *
+ * Nothing server-side reads the query (static hosts resolve by path), and a
+ * navigation's document URL still comes from the request rather than from this
+ * fetch, so the page keeps its address and its relative `./assets/…` paths.
+ */
+function shellFetch(url) {
+  const target = new URL(url);
+  target.searchParams.set('sw', String(Date.now()));
+  return fetch(target.href, { cache: 'no-store' });
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -77,7 +99,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       (async () => {
         try {
-          const fresh = await fetch(request);
+          const fresh = await shellFetch(request.url);
           const cache = await caches.open(VERSION);
           if (fresh && fresh.ok) cache.put('./index.html', fresh.clone());
           return fresh;
