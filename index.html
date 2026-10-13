@@ -13,14 +13,14 @@
     <link rel="icon" type="image/png" sizes="64x64" href="./icons/favicon-64.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="./icons/apple-touch-icon.png" />
     <title>MMD Viewer · lifelike test</title>
-    <script type="module" crossorigin src="./assets/index-BnmWs7nk.js"></script>
-    <link rel="stylesheet" crossorigin href="./assets/index-CVl7ckog.css">
+    <script type="module" crossorigin src="./assets/index-CBYw6rdM.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-CzRliF85.css">
   </head>
   <body>
     <canvas id="stage"></canvas>
 
     <header id="topbar">
-      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.4.0</small></div>
+      <div class="brand"><span class="dot"></span><b>MMD Viewer</b><small id="version">beta-0.4.2</small></div>
       <div class="actions">
         <button id="btn-model" class="primary" title="Pick a folder (or the files) of a .pmx/.pmd model">Add model</button>
         <button id="btn-motion" title="Pick one or more .vmd motion files" disabled>Add motion</button>
@@ -234,6 +234,14 @@
             <button id="pose-save" title="Write the pose as a .vpd file">Save .vpd</button>
             <button id="pose-load" title="Load a .vpd pose onto this model">Load .vpd</button>
           </div>
+          <h2 style="margin-top:10px">Poses <output id="out-poses" class="muted">0</output></h2>
+          <p class="muted tiny">A folder of <b>.vpd</b> poses loads here — click one to apply it. A pose saved by this viewer also remembers whether IK was on or off, and applies that with the pose; a <code>.vpd</code> from another tool has no such field and reads <b>IK ?</b>.</p>
+          <div class="row">
+            <button id="pose-folder" title="Pick a folder of .vpd poses and list them here">Pose folder</button>
+            <button id="pose-clear" class="ghost" disabled title="Forget the loaded poses">Clear poses</button>
+          </div>
+          <input id="pick-pose-folder" type="file" webkitdirectory multiple hidden />
+          <div id="pose-library" class="list"><em class="muted">No poses loaded.</em></div>
           <input id="pose-search" type="search" placeholder="Search bone…" />
           <div id="pose-bones" class="list"></div>
           <h2 style="margin-top:10px">IK <output id="out-ik" class="muted">no IK</output></h2>
@@ -331,7 +339,7 @@
       <div id="overlay-progress" hidden><i id="overlay-bar"></i></div>
     </div>
     <div id="toast" hidden role="status" aria-live="polite"></div>
-    <div id="drophint" hidden>Drop model folder / .vmd files here</div>
+    <div id="drophint" hidden>Drop model folder / .vmd / .vpd files here</div>
 
   </body>
 </html>
